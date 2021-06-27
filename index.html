@@ -3,6 +3,25 @@
 <head>
     <title>TypeScript Cheat Sheet</title>
     <link rel="stylesheet" type="text/css" href="https://droces.github.io/Deno-Cheat-Sheet/deno-cs.css">
+    <style type="text/css">
+        code,
+        .code {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #606060;
+            background: #f5f5f5;
+            padding: 0.1em 0.2em;
+        }
+        th, td {
+            padding: 0.4em;
+        }
+        main {
+            column-width: 400px;
+        }
+        [title] {
+            text-decoration: underline dashed #007acc; /* The TypeScript logo blue */
+        }
+    </style>
 </head>
 <body>
 
@@ -23,19 +42,30 @@
         <section>
             <table cellspacing="0">
                 <thead>
-                    <tr><th colspan="2">Basic types</th></tr>
+                    <tr><th colspan="2">Types</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>Boolean</td>                <td>true or false</td></tr>
-                    <tr><td>Number</td>                 <td>decimal, hex, binary, or ocatal</td></tr>
-                    <tr><td>String</td>                 <td>"string" or 'string' or `string`</td></tr>
-                    <tr><td>Array</td>                  <td>type[] or Array&lt;type&gt; = [val1, val2, &hellip;]</td></tr>
-                    <tr><td>Tuple</td>                  <td>let x: [type1, type2, &hellip;]</td></tr>
-                    <tr><td>Enum</td>                   <td>enum Color {Red, Green, &hellip;}</td></tr>
-                    <tr><td>Any</td>                    <td>Opt-out of type checking; value passes compile-time checks</td></tr>
-                    <tr><td>Void</td>                   <td>Opposite of any: absence of any type</td></tr>
+                    <tr><th colspan="2">Primitives</th></tr>
+                    <tr><td>Boolean</td>                <td>True or false</td></tr>
+                    <tr><td>Number</td>                 <td>Decimal, hex, binary, or ocatal</td></tr>
+                    <tr><td>String</td>                 <td><code>"string"</code> or <code>'string'</code> or <code>`string`</code></td></tr>
                     <tr><td>Null</td>                   <td>Absense of a value</td></tr>
-                    <tr><td>Undefined</td>              <td></td></tr>
+                    <tr><td>Undefined</td>              <td><code>myVar name; // Undefined</code></td></tr>
+                    <tr><td>bigint</td>                 <td>Very large integers</td></tr>
+                    <tr><td>symbol</td>                 <td>Creates a globally unique reference<br>
+                        <code>Symbol("s") !== Symbol("s");</code></td></tr>
+
+                    <tr><th colspan="2">Others</th></tr>
+                    <tr><td>Array</td>                  <td><code>type[] = [val1, val2, &hellip;]</code>, or<br>
+                        <code>Array&lt;type&gt; = [val1, val2, &hellip;]</code></td></tr>
+                    <tr><td>Tuple</td>                  <td><code>let x: [type1, type2, &hellip;]</code></td></tr>
+                    <tr><td>Enum</td>                   <td><code>enum Numbers {One = 1, &hellip;}</code>
+                                                            <code>Numbers.One === 1; // true</code>, or<br>
+                                                            <code>enum Strings {One = "one", &hellip;}</code></td></tr>
+                    <tr><td>Any</td>                    <td>Opt-out of type checking; value passes compile-time checks<br>
+                        <code>let unknown: any;</code></td></tr>
+                    <tr><td>Void</td>                   <td>Opposite of any: absence of any type<br>
+                        <code>function nothing(): void {}</code></td></tr>
                     <tr><td>Never</td>                  <td>Represents type of values that never occur</td></tr>
                     <tr><td>Object</td>                 <td>Non-primitive type</td></tr>
                 </tbody>
@@ -45,11 +75,122 @@
         <section>
             <table cellspacing="0">
                 <thead>
-                    <tr><th colspan="1">Declarations</th></tr>
+                    <tr><th colspan="2">Concepts</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>let isDone: <mark>type</mark> = false</td></tr>
-                    <tr><td>function fn (arg: <mark>type</mark>, &hellip; ): <mark>type</mark> { &hellip; }</td></tr>
+                    <tr><td>Primitive types</td>    <td>String, number, boolean, etc.</td></tr>
+                    <tr><td>Type inference</td>     <td><code>let name = 'Fluffy';<br>
+                                                        first = 1234; // Error</code></td></tr>
+                    <tr><td>Shape of an object</td> <td>TypeScript knows and enforces the properties of objects.</td></tr>
+                    <tr><td>Type annotations</td>   <td><code>let myVariable: <strong>type</strong>;</code></td></tr>
+                    <tr><td>Type assertions</td>    <td><code>x<strong>!</strong>.toString(); // Stating that x is the right type</code></td></tr>
+                    <tr><td>strictNullChecks</td>   <td>Enforces using <code>null</code> and <code>undefined</code> explicitly.</td></tr>
+                    <tr><td><span title="Previously called 'Internal modules'">Namespaces</span></td>         <td>Organise code by wrapping variables, classes, etc. together.</td></tr>
+                    <tr><td>Narrowing</td>          <td>Validation that ensures variables are a particular type.</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <table cellspacing="0">
+                <thead>
+                    <tr><th colspan="2">Declarations</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Variables</td>          <td><code>let isDone: boolean = false;</code></td></tr>
+                    <tr><td>Literals</td>           <td><code><strong>const</strong> pi = 3.14; // π</code></td></tr>
+                    <tr><td>Untion types</td>       <td><code>let age: string <strong>|</strong> number;</code></td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <table cellspacing="0">
+                <thead>
+                    <tr><th colspan="2">Type guards</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Primitive</td>          <td><code>if (typeof padding === "number") {}</code></td></tr>
+                    <tr><td>User-defined</td>          <td><code>isFish(pet: Fish | Bird): <strong title="a 'type predicate'">pet is Fish</strong> => {<br>
+                            &nbsp; &nbsp;return (pet as Fish).swim !== undefined;<br>
+                        }<br>
+                        if (isFish(pet)) {}</code></td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <table cellspacing="0">
+                <thead>
+                    <tr><th colspan="2">Functions</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Argument type</td>    <td><code>function myFn (arg: <strong>type</strong>) {}</code></td></tr>
+                    <tr><td>Return type</td>    <td><code>function myFn (arg): <strong>type</strong> {}</code></td></tr>
+                    <tr><td>Arrow form</td>          <td><code>myFn (arg: type): type => {}</code></td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <table cellspacing="0">
+                <thead>
+                    <tr><th colspan="2">Interfaces</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Explicit</td>           <td><code><strong>interface</strong> Options {<br> &nbsp; &nbsp;x: number;}</code></td></tr>
+                    <tr><td>Inline</td>             <td><code>myFn (opts: <strong>{x: number}</strong>) => {}</code></td></tr>
+                    <tr><td>Optional properties</td><td><code>interface Options {<br> &nbsp; &nbsp;x<strong>?</strong>: number;}</code></td></tr>
+                    <tr><td>Readonly properties</td><td><code>interface Options {<br> &nbsp; &nbsp;<strong>readonly</strong> x: number;}</code></td></tr>
+                    <tr><td>Mapped types</td><td><code>type Dynamic {<br> &nbsp; &nbsp;[key: string]: type;}</code></td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <table cellspacing="0">
+                <thead>
+                    <tr><th colspan="2">Generics</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Basic declaration</td>      <td><code>function id<strong>&lt;Type&gt;</strong>(arg: Type): Type {return arg;}</code></td></tr>
+                    <tr><td>Calling it explicity</td>   <td><code>id<strong>&lt;string&gt;</strong>("hi");</code></td></tr>
+                    <tr><td>Calling it, inferred</td>   <td><code>id("hi"); // returns "hi"</code></td></tr>
+                    <tr><td>Unique name</td>            <td><code>function id&lt;<strong>primitive</strong>&gt;(arg: primitive):
+                        primitive {return arg;}</code></td></tr>
+                    <tr><td>Interface</td>              <td><code>interface GenericIdentityFns {
+                                            <strong>&lt;Type&gt;</strong>(arg: Type): Type;}</code></td></tr>
+                    <tr><td>Generic constraints</td>   <td><code>interface Numeric {<br> &nbsp; &nbsp;length: number;}<br>
+                                                        function myFn&lt;Type <strong>extends Numeric</strong>&gt;(arg: Type) {}</code></td></tr>
+                    <tr><td>Type parameters in generic constraints</td>   <td><code>function&lt;Type, Key extends <strong>keyof Type</strong>&gt;(…) {}</code></td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <table cellspacing="0">
+                <thead>
+                    <tr><th colspan="2" title="Previously called 'Internal modules'">Namespaces</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Basic example</td>          <td><code>namespace helpers {<br> &nbsp; &nbsp;function isValid(a: string) {}<br>}<br>
+                        helpers.isValid("hi");</code></td></tr>
+                    <tr><td>Multi-file namespaces</td>  <td><code>/// &lt;reference path="Validation.ts" /&gt;</code></td></tr>
+                    <tr><td>Aliases</td>                <td><code>import Triangles = Shapes.Polygons.Triangles;</code></td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <table cellspacing="0">
+                <thead>
+                    <tr><th colspan="2">Operators</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>keyof type operator</td>            <td><code>type Point = {x: number};<br>
+                                                                    type keyType = keyof Point;</code></td></tr>
+                    <tr><td>typeof <em title="JS has its own typeof operator">type</em> operator</td>  <td><code>let greet = "hello";<br>
+                                                                    let hi: typeof greet;</code></td></tr>
                 </tbody>
             </table>
         </section>
